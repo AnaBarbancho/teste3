@@ -2,7 +2,7 @@
 Basic client app example.
 Author: Fabrício G. M. de Carvalho, DSc.
 */
-
+import { Request, Response } from 'express';
 /* express web framework */
 const express = require('express')
 
@@ -36,6 +36,9 @@ app.post('/persist', persist_name_handler);
 app.get('/', root_client_handler);
 app.get('/persist_form', persist_client_handler);
 app.listen(port, listenHandler);
+app.post('/insert/postgresql', persist_name_handler) ;
+app.post('/insert/mongodb', persist_name_handler) ;
+    // Lógica para tratar a requisição POST aqui
 
 /* Function to return text capitalization interface */
 function root_client_handler(req:any,res:any){

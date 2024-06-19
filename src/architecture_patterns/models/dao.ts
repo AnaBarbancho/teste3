@@ -20,8 +20,8 @@ class UserDAOPG implements UserDAO{
         user: 'postgres',
         host: 'localhost',
         database: 'uml',
-        password: 'root',
-        port: 3309, // Replace by the port configured in your system
+        password: '123',
+        port: 5432, // Replace by the port configured in your system
     }; 
 
     async insert_user(nome: string, cpf: string){        
@@ -50,61 +50,94 @@ class UserDAOPG implements UserDAO{
 }
 
 
-class UserDAOMariaDB {
+class UserDAOMariaDB implements UserDAO {
     private pool: Pool;
 
     constructor() {
         this.pool = createPool({
             host: 'localhost',
-            user: 'your_user',
-            password: 'your_password',
-            database: 'your_database',
-            port: 3306 // substitua pela porta configurada no seu sistema
+            user: 'seu_usuario',
+            password: 'sua_senha',
+            database: 'seu_banco_de_dados',
+            port: 3306 // Substitua pela porta configurada no seu sistema
         });
     }
 
-    async insertUser(nome: string, cpf: string) {
+    async insert_user(nome: string, cpf: string) {
         let conn;
         try {
             conn = await this.pool.getConnection();
-            console.log('Database successfully connected.');
+            console.log('Conexão com o banco de dados MariaDB estabelecida com sucesso.');
 
             const query = 'INSERT INTO usuario (nome, cpf) VALUES (?, ?)';
             const res = await conn.query(query, [nome, cpf]);
-            console.log('Data inserted successfully', res);
+            console.log('Dados inseridos com sucesso no MariaDB', res);
         } catch (err) {
-            console.error('Error executing query', err);
+            console.error('Erro ao executar a query', err);
         } finally {
             if (conn) conn.end();
         }
     }
 }
-import { MongoClient } from 'mongodb';
 
-class UserDAOMongoDB {
-    private client: MongoClient;
-    private dbName: string = 'your_database';
 
-    constructor() {
-        this.client = new MongoClient('mongodb://localhost:27017');
-    }
+import { Db, MongoClient } from 'mongodb';
 
-    async insertUser(nome: string, cpf: string) {
-        try {
-            await this.client.connect();
-            console.log('Database successfully connected.');
-
-            const db = this.client.db(this.dbName);
-            const collection = db.collection('usuario');
-
-            const result = await collection.insertOne({ nome, cpf });
-            console.log('Data inserted successfully', result);
+class UserDAOMongoDB implements UserDAO{
+    async insert_user(name: string, cpf: string) {
+        let client: MongoClient | null = null;
+        client = await MongoClient.connect(this.url);
+ 
+        const db = client.db('uml');
+ 
+        const collection = db.collection('users');
+ 
+        // Documento a ser inserido
+        const userDocument = {
+            name: name,
+            cpf: cpf
+        };
+ 
+        // Inserir documento na coleção
+        const result = await collection.insertOne(userDocument);
+        console.log(`Documento inserido com sucesso: ${result.insertedId}`);
+ 
+       
+    }  
+    url:string = 'mongodb://localhost:27017'; //database connection url
+    dbName:string = 'uml'; //database name
+ 
+    async listUser(users: string[]){
+ 
+        let client: MongoClient | null = null;
+   
+            try {
+            // Conectar ao servidor MongoDB
+            client = await MongoClient.connect(this.url);
+   
+            console.log('Database MongoDB successfully connected. ');
+            const db: Db = client.db(this.dbName);
+            const collection = db.collection('users');
+   
+            // List all the users in collection
+   
+            const query = { /* your query criteria */ };
+            const options = { /* optional: projection, sort, limit, etc. */ };
+            const cursor = await collection.find(query, options);            
+            const documents = await cursor.toArray();
+            for(let i=0; i<documents.length; ++i){
+                users.push(documents[i].nome);
+            }            
         } catch (err) {
-            console.error('Error executing query', err);
+            console.error('Database connection error', err);
         } finally {
-            await this.client.close();
+            if (client) {
+            await client.close(); // Closes the connection
+            console.log('Mongodb database connection closed');
+            }
         }
-    }
+        return users;
+    }//list
 }
 
 
