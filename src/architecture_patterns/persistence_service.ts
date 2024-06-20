@@ -1,6 +1,7 @@
 import userController from "./controllers/userController";
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import { logger } from "./logger/log";
 
 
 const app = express();
@@ -23,5 +24,6 @@ app.post('/persist', userController.insertUser);
 
 // Inicialização do servidor
 app.listen(port, () => {
+  logger.info(`Capitalization service escutando na porta ${port}!`);
   console.log(`Servidor rodando na porta ${port}`);
 });

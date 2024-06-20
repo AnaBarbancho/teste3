@@ -6,9 +6,9 @@ import { UserDAOMariaDB, UserDAOMongoDB, UserDAOPG } from '../models/dao';
 
 class UserController {
   public async insertUser(req: Request, res: Response): Promise<void> {
-    const { name, cpf, database } = req.body;
+    const { natureza,descricao,name, cpf, database } = req.body;
 
-    if (!name || !cpf || !database) {
+    if (!natureza||!descricao||!name || !cpf || !database) {
       res.status(400).send('Missing required fields');
       return;
     }
@@ -31,7 +31,7 @@ class UserController {
           return;
       }
 
-      await userDAO.insert_user(name, cpf);
+      await userDAO.insert_user(natureza,descricao,name, cpf);
       res.render('response.ejs', { service_response: 'Dados inseridos com sucesso' });
     } catch (error) {
       console.error('Erro ao persistir dados:', error);

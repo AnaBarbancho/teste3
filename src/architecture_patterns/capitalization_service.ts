@@ -15,6 +15,8 @@ const port = 5001;
 
 /* Model import */
 import {StringProcessor} from "./models/string_case";
+import { logger } from './logger/log';  
+import { logRequestsMiddleware } from "./api_gateway";
 
 
 
@@ -27,7 +29,7 @@ app.use(cors({
 })); 
 
 /* Service route creation . */
-app.get('/capitalize', capitalize_handler);
+app.get('/capitalize',logRequestsMiddleware, capitalize_handler);
 /* Server execution */
 app.listen(port, listenHandler);
 
@@ -46,5 +48,6 @@ async function capitalize_handler(req:any, res:any){
 }
 
 export function listenHandler(){
+    logger.info(`Capitalization service escutando na porta ${port}!`);
     console.log(`Listening port ${port}!`);
 }

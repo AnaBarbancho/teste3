@@ -1,0 +1,34 @@
+<%# Carrega todo o conteúdo de header.ejs %>
+<%- include('base_header') -%>
+
+<div>
+    <h1>Lista de Chamados</h1>
+
+    <div>
+        <h2>PostgreSQL</h2>
+        <ul>
+            <li>Dados inseridos com sucesso no PostgreSQL: <%= natureza %>, <%= descric %>, <%= name %>, <%= cpf %></li>
+        </ul>
+    </div>
+
+    <div>
+        <h2>MongoDB</h2>
+        <ul>
+            <% calls.mongodb.forEach(call => { %>
+                <li><strong>Natureza:</strong> <%= call.natureza %>, <strong>Descrição:</strong> <%= call.descricao %>, <strong>Nome:</strong> <%= call.name %>, <strong>CPF:</strong> <%= call.cpf %></li>
+            <% }); %>
+        </ul>
+    </div>
+
+    <div>
+        <h2>MariaDB</h2>
+        <ul>
+            <% calls.mariadb.forEach(call => { %>
+                <li><strong>Natureza:</strong> <%= call.natureza %>, <strong>Descrição:</strong> <%= call.descricao %>, <strong>Nome:</strong> <%= call.nome %>, <strong>CPF:</strong> <%= call.cpf %></li>
+            <% }); %>
+        </ul>
+    </div>
+</div>
+
+<%# Inclui todo o conteúdo de footer.ejs %>
+<%- include('base_footer') -%>

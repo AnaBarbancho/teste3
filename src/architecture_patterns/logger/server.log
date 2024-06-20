@@ -1,0 +1,28 @@
+[2024-06-20T19:35:48.137Z] [INFO] API Gateway escutando na porta 5000!
+[2024-06-20T19:35:55.583Z] [INFO] Capitalization service escutando na porta 5001!
+[2024-06-20T19:36:02.377Z] [INFO] Capitalization service escutando na porta 5003!
+[2024-06-20T19:36:28.400Z] [INFO] Capitalization service escutando na porta 5002!
+[2024-06-20T19:36:51.179Z] [HTTP] GET /capitalization?str_in=ana - 200
+[2024-06-20T19:40:24.303Z] [INFO] Capitalization service escutando na porta 5002!
+[2024-06-20T19:42:24.879Z] [INFO] Capitalization service escutando na porta 5003!
+[2024-06-20T19:43:18.018Z] [INFO] Capitalization service escutando na porta 5003!
+[2024-06-20T19:59:19.909Z] [INFO] Capitalization service escutando na porta 5003!
+[2024-06-20T19:59:30.254Z] [INFO] Dados inseridos com sucesso no banco mongodb:dúvida,preciso de ajuda, ana, 376585254667
+[2024-06-20T20:01:06.943Z] [INFO] Dados inseridos com sucesso no banco postgres:problema,hha, afgda, adfgadg
+[2024-06-20T20:02:02.161Z] [INFO] Capitalization service escutando na porta 5003!
+[2024-06-20T20:02:48.085Z] [HTTP] GET /capitalization?str_in=ana - 200
+[2024-06-20T20:06:32.762Z] [INFO] Capitalization service escutando na porta 5003!
+[2024-06-20T20:08:02.937Z] [ERROR] Erro ao buscar chamados nos bancos de dados: Error: Method not implemented.
+[2024-06-20T20:08:10.296Z] [INFO] Dados inseridos com sucesso no banco postgres:dúvida,hha, afgda, adfgadg
+[2024-06-20T20:08:17.145Z] [ERROR] Erro ao buscar chamados nos bancos de dados: Error: Method not implemented.
+[2024-06-20T20:12:51.129Z] [INFO] Capitalization service escutando na porta 5003!
+[2024-06-20T20:17:09.984Z] [INFO] Dados inseridos com sucesso no banco postgres:dúvida,hha, afgda, adfgadg
+[2024-06-20T20:21:43.259Z] [INFO] Dados inseridos com sucesso no banco postgres:dúvida,hha, afgda, adfgadg
+[2024-06-20T20:24:17.053Z] [INFO] Servidor iniciado na porta 5003
+[2024-06-20T20:24:24.131Z] [INFO] Dados inseridos com sucesso no banco postgres:dúvida,hha, afgda, adfgadg
+[2024-06-20T20:29:11.017Z] [HTTP] GET /capitalization?str_in=ana - 200
+[2024-06-20T20:29:16.388Z] [HTTP] GET /capitalization?str_in=ana - 200
+[2024-06-20T20:33:46.143Z] [INFO] Servidor iniciado na porta 5003
+[2024-06-20T20:37:31.842Z] [INFO] Servidor iniciado na porta 5003
+[2024-06-20T20:39:42.848Z] [INFO] Servidor iniciado na porta 5003
+[2024-06-20T20:40:35.799Z] [INFO] Servidor iniciado na porta 5003

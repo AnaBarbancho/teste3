@@ -7,15 +7,17 @@
 import { Db, MongoClient } from 'mongodb';
 import { Client} from 'pg';
 import { createPool, Pool, PoolConnection } from 'mariadb';
+import { logger } from '../logger/log';
 
 
 interface UserDAO{
-    insert_user(name:string, cpf:string):any;
+    insert_user(nature:string,description:string,name:string, cpf:string):any;
 }
 
 
 
 class UserDAOPG implements UserDAO{
+
     //Database configuration
     dbConfig:Object = {
         user: 'postgres',
@@ -25,17 +27,17 @@ class UserDAOPG implements UserDAO{
         port: 5432, // Replace by the port configured in your system
     }; 
 
-    async insert_user(nome: string, cpf: string){        
+    async insert_user(natureza:string,descricao:string,nome: string, cpf: string){        
         /* function to connect to database and    
         perform a simple query */
         const client = new Client(this.dbConfig);
-        let data={'nome': nome, 'cpf':cpf};
+        let data={'natureza':natureza,'descricao':descricao,'nome': nome, 'cpf':cpf};
         console.log(data); //debug only
          await client.connect();
          console.log('Database successfully connected.');
          // Executing a query 
-         const insertQuery = 'INSERT INTO usuario(nome, cpf) VALUES ($1, $2)';
-          client.query(insertQuery, [data.nome, data.cpf])
+         const insertQuery = 'INSERT INTO usuario(natureza,descricao,nome, cpf) VALUES ($1, $2, $3, $4)';
+          client.query(insertQuery, [data.natureza,data.descricao,data.nome, data.cpf])
                 .then(result => {
                     console.log('Data inserted successfully');                    
                 })
@@ -48,10 +50,23 @@ class UserDAOPG implements UserDAO{
                 });                            
                  
     }
+    async getAllCalls(): Promise<any[]> {
+        const client = new Client(this.dbConfig);
+        await client.connect();
+
+        const query = 'SELECT * FROM usuario';
+        const result = await client.query(query);
+        const calls = result.rows;
+
+        await client.end();
+        return calls;
+    }
 }
 
+
 class UserDAOMongoDB implements UserDAO{
-    async insert_user(name: string, cpf: string) {
+
+    async insert_user(nature:string,description:string,name: string, cpf: string) {
         let client: MongoClient | null = null;
         client = await MongoClient.connect(this.url);
 
@@ -61,6 +76,8 @@ class UserDAOMongoDB implements UserDAO{
 
         // Documento a ser inserido
         const userDocument = {
+            natureza:nature,
+            descricao:description,
             name: name,
             cpf: cpf
         };
@@ -105,6 +122,16 @@ class UserDAOMongoDB implements UserDAO{
         }
         return users;
     }//list
+    async getAllCalls(): Promise<any[]> {
+        const client = await MongoClient.connect(this.url);
+        const db = client.db(this.dbName);
+        const collection = db.collection('users');
+
+        const calls = await collection.find({}).toArray();
+
+        await client.close();
+        return calls;
+    }
 }
 
 
@@ -114,26 +141,40 @@ class UserDAOMariaDB {
     constructor() {
         this.pool = createPool({
             host: 'localhost',
-            user: 'mariadb',
-            password: '1234',
+            user: 'root',
+            password: '123',
             database: 'uml',
             port: 3306,
             connectionLimit: 5
         });
     }
 
-    async insert_user(nome: string, cpf: string): Promise<void> {
+    async insert_user(natureza:string,descricao:string,nome: string, cpf: string): Promise<void> {
         let conn: PoolConnection | null = null;
         try {
             conn = await this.pool.getConnection();
             console.log('Conexão com o banco de dados MariaDB estabelecida com sucesso.');
 
-            const query = 'INSERT INTO users (nome, cpf) VALUES (?, ?)';
-            const res = await conn.query(query, [nome, cpf]);
+            const query = 'INSERT INTO users (natureza,descricao,nome, cpf) VALUES (?, ?, ?, ?)';
+            const res = await conn.query(query, [natureza,descricao,nome, cpf]);
             console.log('Dados inseridos com sucesso no MariaDB', res);
         } catch (err) {
             console.error('Erro ao executar a query', err);
             throw err; // Re-throw para que o erro seja tratado no endpoint
+        } finally {
+            if (conn) conn.release();
+        }
+    }
+    async getAllCalls(): Promise<any[]> {
+        let conn: PoolConnection | null = null;
+        try {
+            conn = await this.pool.getConnection();
+            const query = 'SELECT * FROM users';
+            const result = await conn.query(query);
+            return result[0]; // Resultado da consulta está na primeira posição do array
+        } catch (err) {
+            logger.error(`Erro ao buscar chamados no MariaDB: ${err}`);
+            throw err;
         } finally {
             if (conn) conn.release();
         }

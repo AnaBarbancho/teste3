@@ -3,7 +3,9 @@ Basic API gateway service
 Autor: Fabrício G. M. de Carvalho, Ph.D
 */
 
-const express = require('express');
+
+import { logger } from './logger/log';
+import   express = require('express');
 const bodyParser = require('body-parser');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
@@ -50,11 +52,17 @@ const persistence_proxy = createProxyMiddleware({
   
 
 // Use the proxy middleware for all requests
-app.use('/capitalization', capitalization_proxy); 
-app.use('/persistence', persistence_proxy); 
+app.use('/capitalization', logRequestsMiddleware,capitalization_proxy); 
+app.use('/persistence', logRequestsMiddleware,persistence_proxy); 
 /* Server execution */
 app.listen(port, listenHandler);
 
 function listenHandler(){
+    logger.info(`API Gateway escutando na porta ${port}!`);
     console.log(`Listening port ${port}!`);
+}
+export function logRequestsMiddleware(req: express.Request, res: express.Response, next: express.NextFunction) {
+  // Log da requisição HTTP recebida
+  logger.logHttpRequest(req.method, req.originalUrl, res.statusCode);
+  next();
 }

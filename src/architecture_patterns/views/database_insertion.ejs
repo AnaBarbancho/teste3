@@ -3,6 +3,14 @@
 
 <form method="post" action="/persist">
     Dados para persistir no banco de dados: <br/>
+    <label for="nature">Natureza do Chamado:</label>
+    <select id="nature" name="nature">
+      <option value="dúvida">Dúvida</option>
+      <option value="problema">Resolução de Problemas</option>
+    </select><br/>
+    <label for="description">Descrição:</label>
+    <input type="text" id="description" name="description" required>
+    <br>
     Nome: <input name="name" type="text" /><br/>
     CPF: <input name="cpf" type="text" /><br/>
     Banco de Dados:
@@ -12,6 +20,9 @@
         <option value="mariadb">MariaDB</option>
     </select><br/>
     <input type="submit" value="Enviar">
+</form>
+<form method="post" action="/list-calls">
+    <button type="submit">Listar Chamados</button>
 </form>
     
 <%# Includes the entire contents of footer.ejs %>
