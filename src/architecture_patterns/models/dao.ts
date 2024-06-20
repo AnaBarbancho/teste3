@@ -169,9 +169,9 @@ class UserDAOMariaDB {
         let conn: PoolConnection | null = null;
         try {
             conn = await this.pool.getConnection();
-            const query = 'SELECT * FROM users';
+            const query = 'SELECT * FROM users'; // Verifique se a tabela e os campos estão corretos
             const result = await conn.query(query);
-            return result[0]; // Resultado da consulta está na primeira posição do array
+            return result; // Retorna os resultados da consulta
         } catch (err) {
             logger.error(`Erro ao buscar chamados no MariaDB: ${err}`);
             throw err;

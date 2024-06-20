@@ -1,34 +1,52 @@
-<%# Carrega todo o conteúdo de header.ejs %>
 <%- include('base_header') -%>
 
-<div>
+<form method="get">
     <h1>Lista de Chamados</h1>
 
     <div>
         <h2>PostgreSQL</h2>
         <ul>
-            <li>Dados inseridos com sucesso no PostgreSQL: <%= natureza %>, <%= descric %>, <%= name %>, <%= cpf %></li>
+            <% if (calls && calls.postgres) { %>
+                <% calls.postgres.forEach(call => { %>
+                    <li><strong>Natureza:</strong> <%= call.natureza %>, <strong>Descrição:</strong> <%= call.descricao %>, <strong>Nome:</strong> <%= call.nome %>, <strong>CPF:</strong> <%= call.cpf %></li>
+                <% }); %>
+            <% } else { %>
+                <li>Nenhum chamado encontrado para PostgreSQL.</li>
+            <% } %>
         </ul>
     </div>
 
     <div>
         <h2>MongoDB</h2>
         <ul>
-            <% calls.mongodb.forEach(call => { %>
-                <li><strong>Natureza:</strong> <%= call.natureza %>, <strong>Descrição:</strong> <%= call.descricao %>, <strong>Nome:</strong> <%= call.name %>, <strong>CPF:</strong> <%= call.cpf %></li>
-            <% }); %>
+            <% if (calls && calls.mongodb) { %>
+                <% calls.mongodb.forEach(call => { %>
+                    <li><strong>Natureza:</strong> <%= call.natureza %>, <strong>Descrição:</strong> <%= call.descricao %>, <strong>Nome:</strong> <%= call.name %>, <strong>CPF:</strong> <%= call.cpf %></li>
+                <% }); %>
+            <% } else { %>
+                <li>Nenhum chamado encontrado para MongoDB.</li>
+            <% } %>
         </ul>
     </div>
 
     <div>
         <h2>MariaDB</h2>
         <ul>
-            <% calls.mariadb.forEach(call => { %>
-                <li><strong>Natureza:</strong> <%= call.natureza %>, <strong>Descrição:</strong> <%= call.descricao %>, <strong>Nome:</strong> <%= call.nome %>, <strong>CPF:</strong> <%= call.cpf %></li>
-            <% }); %>
+            <% if (calls && Array.isArray(calls.mariadb) && calls.mariadb.length > 0) { %>
+                <% calls.mariadb.forEach(call => { %>
+                    <li>
+                        <strong>Natureza:</strong> <%= call.natureza %>, 
+                        <strong>Descrição:</strong> <%= call.descricao %>, 
+                        <strong>Nome:</strong> <%= call.name %>, 
+                        <strong>CPF:</strong> <%= call.cpf %>
+                    </li>
+                <% }); %>
+            <% } else { %>
+                <li>Nenhum chamado encontrado para MariaDB.</li>
+            <% } %>
         </ul>
     </div>
-</div>
+    
+</form>
 
-<%# Inclui todo o conteúdo de footer.ejs %>
 <%- include('base_footer') -%>

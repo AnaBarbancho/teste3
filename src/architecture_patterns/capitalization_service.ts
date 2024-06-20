@@ -4,7 +4,7 @@ Autor: Fabrício G. M. de Carvalho, Ph.D
 */
 
 /* Importing express framework */
-const express = require('express');
+import express = require('express');
 const bodyParser = require('body-parser');
 var cors = require('cors');
 const app = express();
@@ -16,7 +16,7 @@ const port = 5001;
 /* Model import */
 import {StringProcessor} from "./models/string_case";
 import { logger } from './logger/log';  
-import { logRequestsMiddleware } from "./api_gateway";
+
 
 
 
@@ -29,7 +29,7 @@ app.use(cors({
 })); 
 
 /* Service route creation . */
-app.get('/capitalize',logRequestsMiddleware, capitalize_handler);
+app.get('/capitalize', logRequestsMiddleware,capitalize_handler);
 /* Server execution */
 app.listen(port, listenHandler);
 
@@ -51,3 +51,8 @@ export function listenHandler(){
     logger.info(`Capitalization service escutando na porta ${port}!`);
     console.log(`Listening port ${port}!`);
 }
+export function logRequestsMiddleware(req: express.Request, res: express.Response, next: express.NextFunction) {
+    // Log da requisição HTTP recebida
+    logger.logHttpRequest(req.method, req.originalUrl, res.statusCode);
+    next();
+  }

@@ -90,12 +90,12 @@ app.post('/list-calls', async (req: Request, res: Response) => {
         };
 
         // Renderiza a página list_calls.ejs com os dados dos chamados
-        res.render('list_calls.ejs', { 
-            natureza: 'natureza', // Passe os valores reais aqui
+        res.render('list_calls', {
+            natureza: 'natureza', // Substitua pelos valores reais aqui
             descricao: 'descricao',
             name: 'nome',
             cpf: 'cpf',
-            calls: allCalls 
+            calls: allCalls
         });
     } catch (error) {
         logger.error(`Erro ao buscar chamados nos bancos de dados: ${error}`);

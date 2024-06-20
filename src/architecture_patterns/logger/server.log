@@ -26,3 +26,30 @@
 [2024-06-20T20:37:31.842Z] [INFO] Servidor iniciado na porta 5003
 [2024-06-20T20:39:42.848Z] [INFO] Servidor iniciado na porta 5003
 [2024-06-20T20:40:35.799Z] [INFO] Servidor iniciado na porta 5003
+[2024-06-20T21:48:13.266Z] [INFO] API Gateway escutando na porta 5000!
+[2024-06-20T21:50:45.941Z] [INFO] Servidor iniciado na porta 5003
+[2024-06-20T21:51:04.176Z] [INFO] Capitalization service escutando na porta 5002!
+[2024-06-20T21:51:34.248Z] [INFO] Capitalization service escutando na porta 5001!
+[2024-06-20T21:52:51.370Z] [INFO] Capitalization service escutando na porta 5001!
+[2024-06-20T21:53:11.391Z] [INFO] Capitalization service escutando na porta 5001!
+[2024-06-20T21:53:36.689Z] [INFO] Dados inseridos com sucesso no banco mongodb:problema,jhfksjlsz, ana, 42654656
+[2024-06-20T21:53:50.207Z] [INFO] Dados inseridos com sucesso no banco postgres:problema,jhfksjlsz, ana, 42654656
+[2024-06-20T21:55:03.744Z] [INFO] Dados inseridos com sucesso no banco postgres:dúvida,jhfksjlsz, adfhgh, 42654656
+[2024-06-20T21:55:13.039Z] [ERROR] Erro ao persistir dados: SqlError: (conn:4, no: 1054, SQLState: 42S22) Unknown column 'natureza' in 'field list'
+sql: INSERT INTO users (natureza,descricao,nome, cpf) VALUES (?, ?, ?, ?) - parameters:['dúvida','jhfksjlsz','adfhgh','42654656']
+[2024-06-20T21:55:47.088Z] [INFO] Dados inseridos com sucesso no banco mariadb:dúvida,jhfksjlsz, adfhgh, 42654656
+[2024-06-20T22:08:16.471Z] [INFO] Servidor iniciado na porta 5003
+[2024-06-20T22:12:32.934Z] [INFO] Dados inseridos com sucesso no banco mariadb:dúvida,sdgvhb, dfswaef, 342342
+[2024-06-20T22:13:37.461Z] [INFO] Dados inseridos com sucesso no banco mongodb:dúvida,sdgvhb, ana, 342342
+[2024-06-20T22:18:15.851Z] [INFO] Dados inseridos com sucesso no banco postgres:dúvida,como faz esse trabalho? Não entendi!!, Marcelly, 00000
+[2024-06-20T22:20:19.669Z] [INFO] Dados inseridos com sucesso no banco postgres:dúvida,como faz esse trabalho? Não entendi!!, Marcelly, 00000
+[2024-06-20T22:20:42.547Z] [INFO] Capitalization service escutando na porta 5002!
+[2024-06-20T22:20:57.298Z] [INFO] Dados inseridos com sucesso no banco postgres:dúvida,como faz esse trabalho? Não entendi!!, Marcelly, 00000
+[2024-06-20T22:24:05.906Z] [INFO] Dados inseridos com sucesso no banco postgres:dúvida,como faz esse trabalho? Não entendi!!, Marcelly, 00000
+[2024-06-20T22:34:23.033Z] [INFO] Servidor iniciado na porta 5003
+[2024-06-20T22:36:57.469Z] [INFO] Dados inseridos com sucesso no banco postgres:dúvida,como faz esse trabalho? Não entendi!!, Marcelly, 00000
+[2024-06-20T22:37:03.800Z] [INFO] Dados inseridos com sucesso no banco mariadb:dúvida,como faz esse trabalho? Não entendi!!, Marcelly, 00000
+[2024-06-20T22:39:37.517Z] [INFO] Servidor iniciado na porta 5003
+[2024-06-20T22:39:52.588Z] [INFO] Capitalization service escutando na porta 5002!
+[2024-06-20T22:41:34.360Z] [INFO] Dados inseridos com sucesso no banco mariadb:problema,Estou com dores nas costas, ana, 1774633315
+[2024-06-20T22:45:53.143Z] [ERROR] Campos obrigatórios faltando na requisição de persistência
