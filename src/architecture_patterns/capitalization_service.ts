@@ -45,6 +45,6 @@ async function capitalize_handler(req:any, res:any){
     res.end(str_output_json);     
 }
 
-function listenHandler(){
+export function listenHandler(){
     console.log(`Listening port ${port}!`);
 }

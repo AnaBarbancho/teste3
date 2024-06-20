@@ -1,4 +1,5 @@
 /*
+/*
 Basic Data Persistence Service
 Autor: Fabrício G. M. de Carvalho, Ph.D
 */
@@ -14,7 +15,7 @@ at the same machine. */
 const port = 5002;
 
 /* Persistence class models */
-import {UserDAO, UserDAOMariaDB, UserDAOMongoDB, UserDAOPG} from "./models/dao";
+import {UserDAO, UserDAOPG,UserDAOMariaDB,UserDAOMongoDB} from "./models/dao";
 
 
 
@@ -30,6 +31,10 @@ app.use(cors({
 app.get('/persist', persistence_handler);
 /* Server execution */
 app.listen(port, listenHandler);
+
+function listenHandler(){
+    console.log(`Listening port ${port}!`);
+}
 
 
 /* Request handlers: */

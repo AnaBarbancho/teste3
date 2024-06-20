@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 /* module to generate requests to service gateway */
 var axios = require('axios');
 import { AxiosResponse, AxiosError } from "axios";
+import { UserDAOMongoDB } from './models/dao';
 
 const app = express();
 const port = 5003;
@@ -37,7 +38,8 @@ app.get('/', root_client_handler);
 app.get('/persist_form', persist_client_handler);
 app.listen(port, listenHandler);
 app.post('/insert/postgresql', persist_name_handler) ;
-app.post('/insert/mongodb', persist_name_handler) ;
+app.post('/insert/mongodb', persist_name_handler)
+app.post('/insert/mariadb', persist_name_handler) ;
     // Lógica para tratar a requisição POST aqui
 
 /* Function to return text capitalization interface */
@@ -109,9 +111,7 @@ async function persist_name_handler(req:any,res:any){
                 console.error('Error:', error.message);
                 }
             });   
-    
 }
-
 
 
 /* Tratador para inicializar a aplicação (escutar as requisições)*/
