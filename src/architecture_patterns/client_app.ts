@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 /* module to generate requests to service gateway */
 var axios = require('axios');
 import { AxiosResponse, AxiosError } from "axios";
-import { UserDAOMongoDB } from './models/dao';
+import { UserDAOMariaDB, UserDAOMongoDB, UserDAOPG } from './models/dao';
 
 const app = express();
 const port = 5003;
@@ -26,6 +26,39 @@ app.set('views', './views'); //This reference is from the execution point
 /* Configuration to read post request parameters */
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.post('/persist', async (req: { body: { name: any; cpf: any; database: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: string) => void; }) => {
+    const { name, cpf, database } = req.body;
+
+    if (!name || !cpf || !database) {
+        res.status(400).send("Missing required fields");
+        return;
+    }
+
+    try {
+        let userDAO;
+        
+        // Escolha do DAO com base no banco de dados selecionado
+        if (database === 'postgres') {
+            userDAO = new UserDAOPG(); // Instância para interação com PostgreSQL
+        } else if (database === 'mongodb') {
+            userDAO = new UserDAOMongoDB(); // Instância para interação com MongoDB
+        } else if (database === 'mariadb') {
+            userDAO = new UserDAOMariaDB(); // Instância para interação com MariaDB
+        } else {
+            res.status(400).send("Invalid database selection");
+            return;
+        }
+
+        // Chamada ao método de inserção de usuário do DAO escolhido
+        await userDAO.insert_user(name, cpf);
+
+        res.send("Dados inseridos com sucesso");
+    } catch (error) {
+        console.error("Erro ao persistir dados:", error);
+        res.status(500).send("Erro ao persistir dados");
+    }
+});
+
 
 /* Static files directory configuration .*/
 app.use(express.static('src/public'));
@@ -37,10 +70,7 @@ app.post('/persist', persist_name_handler);
 app.get('/', root_client_handler);
 app.get('/persist_form', persist_client_handler);
 app.listen(port, listenHandler);
-app.post('/insert/postgresql', persist_name_handler) ;
-app.post('/insert/mongodb', persist_name_handler)
-app.post('/insert/mariadb', persist_name_handler) ;
-    // Lógica para tratar a requisição POST aqui
+
 
 /* Function to return text capitalization interface */
 function root_client_handler(req:any,res:any){
